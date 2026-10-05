@@ -7,23 +7,25 @@ use Illuminate\Http\Request;
 
 class MatakuliahController extends Controller
 {
+    public function index()
+    {
+        $matakuliah = Matakuliah::all();
+
+        return view('matakuliah.index', compact('matakuliah'));
+    }
+
     public function create()
     {
-        return view('matakuliah.create');
+        return 'Form tambah mata kuliah';
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'kode_mk' => 'required|unique:matakuliahs,kode_mk',
-            'nama_mk' => 'required',
-            'sks' => 'required|integer',
-            'semester' => 'required|integer',
-            'dosen_id' => 'required|exists:users,id',
-        ]);
+        return 'Proses menyimpan mata kuliah';
+    }
 
-        Matakuliah::create($request->all());
-
-        return redirect('/matakuliah');
+    public function show(Matakuliah $matakuliah)
+    {
+        return view('matakuliah.show', compact('matakuliah'));
     }
 }

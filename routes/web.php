@@ -1,12 +1,31 @@
 <?php
 
-use App\Models\Mahasiswa;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MatakuliahController;
 
-Route::get('/mahasiswa', function () {
-    $data = Mahasiswa::all();
-
-    return view('mahasiswa.index', compact('data'));
+Route::get('/', function () {
+    return view('welcome');
 });
-Route::get('/matakuliah/create', [MatakuliahController::class, 'create']);
-Route::post('/matakuliah', [MatakuliahController::class, 'store']);
+
+Route::get('/halo', function () {
+    return 'Halo, ini adalah route pertama saya!';
+});
+
+Route::get('/sapa', function () {
+    return view('sapa', [
+        'nama' => 'Ahmad Fauzi',
+        'kontenHtml' => '<strong>Teks Tebal</strong>',
+    ]);
+});
+
+Route::get('/uji-xss', function () {
+    return view('uji-xss', [
+        'teks' => "<script>alert('XSS')</script>"
+    ]);
+});
+
+Route::resource('mahasiswa', MahasiswaController::class);
+
+Route::resource('matakuliah', MatakuliahController::class)
+    ->only(['index', 'show', 'create', 'store']);
