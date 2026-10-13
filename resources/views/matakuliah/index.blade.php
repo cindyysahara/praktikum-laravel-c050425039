@@ -1,20 +1,28 @@
+
 @extends('layouts.app')
 
 @section('judul', 'Daftar Mata Kuliah')
 
-@section('konten')
+@section('content')
+    <h2>Daftar Mata Kuliah</h2>
 
-    <h1>Daftar Mata Kuliah</h1>
+    @if (session('pesan'))
+        <p>{{ session('pesan') }}</p>
+    @endif
+
+    <p>
+        <a href="{{ route('matakuliah.create') }}">Tambah Mata Kuliah</a>
+    </p>
 
     <table border="1" cellpadding="8" cellspacing="0">
-
+        
         <thead>
             <tr>
-                <th>No</th>
+                
                 <th>Kode</th>
                 <th>Nama Mata Kuliah</th>
                 <th>SKS</th>
-                <th>Keterangan</th>
+                <th>Semester</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -22,35 +30,24 @@
         <tbody>
 
             @forelse ($matakuliah as $mk)
-
-                <tr style="background-color: {{ $loop->even ? '#f2f2f2' : '#ffffff' }}">
-
-                    <td>{{ $loop->iteration }}</td>
-
-                    <td>{{ $mk->kode }}</td>
-
-                    <td>
-                        {{ $mk->nama }}
-
-                        @if ($loop->first)
-                            <strong>(Data Pertama)</strong>
-                        @endif
-                    </td>
-
+                <tr>
+                    <td>{{ $mk->kode_mk }}</td>
+                    <td>{{ $mk->nama_mk }}</td>
                     <td>{{ $mk->sks }}</td>
-
+                    <td>{{ $mk->semester }}</td>
                     <td>
-                        @if ($mk->sks > 3)
-                            <strong>SKS Besar</strong>
-                        @else
-                            SKS Normal
-                        @endif
-                    </td>
+                        <a href="{{ route('matakuliah.show', $mk->id) }}">Detail</a> |
+                        <a href="{{ route('matakuliah.edit', $mk->id) }}">Edit</a>
 
-                    <td>
-                        <a href="{{ route('matakuliah.show', $mk->id) }}">
-                            Detail
-                        </a>
+                        <form action="{{ route('matakuliah.destroy', $mk->id) }}"
+                              method="POST" style="display:inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                Hapus
+                            </button>
+                        </form>
                     </td>
 
                 </tr>
@@ -58,13 +55,11 @@
             @empty
 
                 <tr>
-                    <td colspan="6">
-                        Belum ada data mata kuliah.
-                    </td>
+                    <td colspan="5">Belum ada data mata kuliah.</td>
                 </tr>
 
             @endforelse
-
+            
         </tbody>
 
     </table>

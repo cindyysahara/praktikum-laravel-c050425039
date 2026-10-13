@@ -2,10 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-
-    <title>
-        @yield('judul', 'Aplikasi Akademik')
-    </title>
+    <title>@yield('judul', 'Aplikasi Akademik')</title>
 </head>
 
 <body>
@@ -21,19 +18,13 @@
     </header>
 
     <main>
-
-        @yield('konten')
-
+        @yield('content')
     </main>
 
     <footer>
 
         <hr>
-
-        <p>
-            &copy; {{ date('Y') }} Praktikum Pemrograman Web
-        </p>
-
+        <p>&copy; {{ date('Y') }} Praktikum Pemrograman Web</p>
     </footer>
 
 </body>

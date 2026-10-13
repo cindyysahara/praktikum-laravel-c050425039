@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\NilaiMatakuliah;
 
 class Matakuliah extends Model
 {
@@ -21,4 +22,15 @@ class Matakuliah extends Model
     {
         return $this->belongsTo(User::class, 'dosen_id');
     }
+
+    public function nilaiMatakuliah()
+    {
+        return $this->hasMany(NilaiMatakuliah::class);
+    }
+
+    public function nilai()
+    {
+        return $this->hasMany(NilaiMatakuliah::class, 'matakuliah_id');
+    }
+
 }

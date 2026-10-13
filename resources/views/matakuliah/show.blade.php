@@ -1,28 +1,37 @@
 @extends('layouts.app')
 
-@section('judul', 'Detail Mata Kuliah - ' . $matakuliah->nama)
+@section('content')
+    <h2>Detail Mata Kuliah</h2>
 
-@section('konten')
+    <p>Kode: {{ $matakuliah->kode_mk }}</p>
+    <p>Nama: {{ $matakuliah->nama_mk }}</p>
+    <p>SKS: {{ $matakuliah->sks }}</p>
+    <p>Semester: {{ $matakuliah->semester }}</p>
 
-    <h1>Detail Mata Kuliah</h1>
+    <h3>Daftar Mahasiswa yang Mengambil Mata Kuliah Ini</h3>
 
-    <p>
-        <strong>Kode:</strong>
-        {{ $matakuliah->kode }}
-    </p>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>NIM</th>
+                <th>Nama Mahasiswa</th>
+                <th>Nilai</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($matakuliah->nilai as $item)
+                <tr>
+                    <td>{{ $item->mahasiswa->nim ?? '-' }}</td>
+                    <td>{{ $item->mahasiswa->nama ?? '-' }}</td>
+                    <td>{{ $item->nilai ?? '-' }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="3">Belum ada mahasiswa yang mengambil mata kuliah ini.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
 
-    <p>
-        <strong>Nama Mata Kuliah:</strong>
-        {{ $matakuliah->nama }}
-    </p>
-
-    <p>
-        <strong>SKS:</strong>
-        {{ $matakuliah->sks }}
-    </p>
-
-    <a href="{{ route('matakuliah.index') }}">
-        &laquo; Kembali
-    </a>
-
+    <a href="{{ route('matakuliah.index') }}">Kembali ke daftar</a>
 @endsection

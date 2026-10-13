@@ -16,4 +16,9 @@ class Mahasiswa extends Model
         'prodi',
         'semester'
     ];
+
+    public function nilai()
+    {
+        return $this->hasMany(NilaiMatakuliah::class);
+    }
 }
